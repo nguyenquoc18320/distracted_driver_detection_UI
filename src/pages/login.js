@@ -32,12 +32,14 @@ function Login() {
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
         // <Navigate to="/manage-user" />;
-        navigate("/manage-user");
+        // navigate("/manage-user");
+        navigate("/predict");
       })
       .catch(
         (error) => console.log(error) // Handle the error response object
       );
   }
+  
 
   return (
     <>
@@ -57,8 +59,12 @@ function Login() {
           name="password"
           placeholder="Password"
           onChange={(e) => changePasswordValue(e)}
-        ></input>
+        ></input>        
         <button onClick={() => clickLoginButton()}>Login</button>
+      </div>
+      <div className="div_register">
+          <p>You don't have an account?.</p>
+          <a href = "/adduser">Register now!</a>
       </div>
     </>
   );

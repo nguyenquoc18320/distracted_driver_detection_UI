@@ -14,3 +14,14 @@
     margin: 8px;
     font-size: 16px;
 }
+.div_register{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    
+}
+
+.div_register p{
+    padding-left: 5px;
+    font-size: 16;
+}
