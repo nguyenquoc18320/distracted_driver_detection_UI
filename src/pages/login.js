@@ -40,7 +40,8 @@ function Login() {
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
         // <Navigate to="/manage-user" />;
-        navigate("/manage-user");
+        // navigate("/manage-user");
+        navigate("/predict");
       })
       .catch(
         (error) => {
@@ -49,9 +50,33 @@ function Login() {
         } // Handle the error response object
       );
   }
+  
 
   return (
     <>
+      <div className="title">
+        <h3>AI - Distracted Driver Detection System</h3>
+      </div>
+      <div className="div_login">
+        <p>Login to account</p>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={(e) => changeUserNameValue(e)}
+        ></input>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={(e) => changePasswordValue(e)}
+        ></input>        
+        <button onClick={() => clickLoginButton()}>Login</button>
+      </div>
+      <div className="div_register">
+          <p>You don't have an account?.</p>
+          <a href = "/adduser">Register now!</a>
+      </div>
       <div className="div_all">
         <div className="div_login">
           <p>Welcom back</p>

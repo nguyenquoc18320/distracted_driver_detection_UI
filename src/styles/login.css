@@ -114,7 +114,22 @@ input:-webkit-autofill:focus {
     font-size: 18px;
     margin: 20px 0px 0px 0px;
 }
+.div_login input{
+    width: 242px;
+    margin: 8px;
+    font-size: 16px;
+}
+.div_register{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    
+}
 
+.div_register p{
+    padding-left: 5px;
+    font-size: 16;
+}
 .div_info img {
     width: 503px;
     height: 412px;
