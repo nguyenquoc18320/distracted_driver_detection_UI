@@ -1,0 +1,145 @@
+.div_dashboard {
+    height: 100%;
+    background-color: #E8F8F8;
+}
+
+.div_content_dashboard {
+    margin-top: 20px;
+    padding: 0px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.div_total_statistic p {
+    margin: 0px;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.div_total_statistic .div_detail {
+    display: flex;
+    flex-direction: row;
+}
+
+.div_total_statistic .div_detail .div_num {
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.div_total_user,
+.div_unfocus_user {
+    display: flex;
+    flex-direction: row;
+    background: #FFFFFF;
+    width: 150px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.div_total_user .label_total_user {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.div_unfocus_user .label_total_user {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+
+/* robot image */
+.div_total_statistic .div_detail img {
+    height: 250px;
+}
+
+
+/* -----MANAGE USER-----*/
+.div_manage_user {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.label_active_deactive {
+    font-weight: 500;
+    font-size: 14px;
+    width: 67px;
+    margin: 0px;
+    border-radius: 40px;
+}
+
+.div_status_col{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/* when not having permission to access the function */
+.div_error {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.div_error p {
+    color: red;
+    font-size: 16px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.id {
+    width: 50px;
+}
+
+.name {
+    width: 200px;
+}
+
+.gender {
+    width: 100px;
+}
+
+.date-of-birth {
+    width: 150px;
+}
+
+.phone {
+    width: 120px;
+}
+
+.status {
+    width: 100px;
+}
+
+.activatet-deactivate-action {
+    width: 200px;
+}
+
+td button {
+    background: transparent;
+    border-color: transparent;
+}
