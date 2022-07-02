@@ -20,6 +20,11 @@ function PredictImage(){
 			body: formData
 		  };
 		fetch(
+			// 'https://freeimage.host/api/1/upload?key=<YOUR_API_KEY>',
+			// {
+			// 	method: 'POST',
+			// 	body: formData,
+			// }
 			Global.api_url + "demo_image", requestOptions
 		)
 			.then((response) => response.json())
