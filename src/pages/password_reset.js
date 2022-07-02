@@ -73,7 +73,7 @@ function ResetPassword() {
                     <input type="Password" name="confirmpassword" placeholder='Confirm your password' onChange={(e) => changeConfirmPasswordValue(e)} required></input>
                 </div>
                 <div className='div_format'>
-                    <button className='btn_register' onClick={() => clickRegisterButton()}>Register</button>
+                    <button className='btn_register' onClick={() => clickRegisterButton()}>Compete</button>
                 </div>
                 
             </div>
