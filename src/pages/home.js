@@ -2,20 +2,27 @@ import React, { useRef, useState } from "react";
 import "../styles/home.css";
 import demoImage from "../services/demo_image";
 import { useNavigate } from "react-router-dom";
+import demoVideo from "../services/demo_video";
 
 function Home() {
   const inputImageRef = useRef();
+  const videoRef = useRef();
   const [inputImage, setInputImage] = useState("");
-  const [resultImage, setResultImage] = useState("");
+  const [outputResult, setOutputResult] = useState("");
   const [isImage, setIsImage] = useState(true);
-  var [file, setFile] = useState("");
+  const [resultText, setResultText] = useState("Result");
 
-    const navigate = useNavigate();
+  var [file, setFile] = useState("");
+  var [video, setVideo] = useState();
+
+
+  const navigate = useNavigate();
 
   //delet all image
   const onBtnDelete = () => {
     setInputImage("");
-    setResultImage("");
+    setOutputResult("");
+    setResultText("Result");
     setFile(null);
   };
 
@@ -23,9 +30,8 @@ function Home() {
   const onFileChange = (e) => {
     var url = URL.createObjectURL(e.target.files[0]);
     setInputImage(url);
+    console.log(url);
     setFile(e.target.files[0]);
-    // Would see a path?
-    // TODO: concat files// Would see a p
   };
 
   const onBtnClick = () => {
@@ -36,25 +42,69 @@ function Home() {
   const onBtnImage = () => {
     /*Collecting node-element and performing click*/
     setIsImage(true);
+    setInputImage("");
+    setOutputResult("");
+    setResultText("Result");
+    setFile(null);
   };
 
   const onBtnVideo = () => {
     /*Collecting node-element and performing click*/
     setIsImage(false);
+    setInputImage("");
+    setOutputResult("");
+    setResultText("Result");
+    setFile(null);
   };
 
   //predict
   const onBtnPredict = async () => {
     if (file != null && file) {
-      var result = await demoImage(file);
-      if (result != null) {
-        const imageObjectURL = URL.createObjectURL(result);
-        setResultImage(imageObjectURL);
+      setResultText("Loading...");
+
+      //is image
+      if (isImage) {
+        var result = await demoImage(file);
+        if (result != null) {
+          const imageObjectURL = URL.createObjectURL(result);
+          setOutputResult(imageObjectURL);
+        } else {
+          console.log("error");
+          setResultText("ERROR...");
+          alert("Cannot process!");
+        }
       } else {
-        console.log("error");
+        //is video
+        var result = await demoVideo(file);
+
+        if (result != null) {
+          const myFile = new File(
+            [result],
+            "demo.mp4",
+            { type: 'video/mp4' }
+        );
+
+        setVideo(myFile);
+
+          // const videoObjectURL = URL.createObjectURL(result, {
+          //   type: "video/mp4",
+          // });
+          const videoObjectURL = URL.createObjectURL(video);
+          // console.log(myFile);
+
+          setOutputResult(videoObjectURL);
+          // let a = document.createElement("a");
+          // a.href = videoObjectURL;
+          // a.download = "demo.mp4";
+          // a.click();
+        } else {
+          console.log("error");
+          setResultText("ERROR...");
+          alert("Cannot process!");
+        }
       }
     } else {
-      alert("Please choose an image!");
+      alert("Please choose an image or a video!");
     }
   };
 
@@ -67,7 +117,9 @@ function Home() {
             type="button"
             className="button_format_data"
             id="button_login"
-            onClick={() => {navigate("/login")}}
+            onClick={() => {
+              navigate("/login");
+            }}
             defaultValue="Login"
           />
         </div>
@@ -113,6 +165,7 @@ function Home() {
           />
         </div>
       </div>
+
       <div className="div_content">
         <div className="div_input_info">
           <div className="drag-area">
@@ -121,10 +174,6 @@ function Home() {
                 <div id="div_icon" className="info-drag">
                   <i className="fa fa-cloud" />
                 </div>
-                <header className="info-drag">
-                  Drag &amp; Drop to Upload File
-                </header>
-                <span className="info-drag">OR</span>
                 <input
                   onClick={onBtnClick}
                   className="info-drag"
@@ -138,15 +187,42 @@ function Home() {
                   id="input_image"
                   alt="image"
                   hidden
+                  accept={isImage ? ".jpg" : ".mp4"}
                   onChange={onFileChange}
-                />{" "}
+                />
               </>
             ) : null}
 
-            {inputImage === "" ? (
-              <img src={inputImage} id="in_img" style={{ display: "none" }} alt='Input' />
+            {isImage ? (
+              inputImage === "" ? (
+                <img
+                  src={inputImage}
+                  id="in_img"
+                  style={{ display: "none" }}
+                  alt="Input"
+                />
+              ) : (
+                <img src={inputImage} id="in_img" alt="Input" />
+              )
+            ) : inputImage === "" ? (
+              <video
+                ref={videoRef}
+                width="750"
+                height="500"
+                controls
+                src={inputImage}
+                type="video/mp4"
+                style={{ display: "none" }}
+              />
             ) : (
-              <img src={inputImage} id="in_img" alt='Input'/>
+              <video
+                ref={videoRef}
+                width="750"
+                height="500"
+                controls
+                src={inputImage}
+                type="video/mp4"
+              />
             )}
           </div>
         </div>
@@ -167,17 +243,15 @@ function Home() {
           />
         </div>
         <div className="div_output">
-          {resultImage === "" ? (
-            <header id="header_result">Result</header>
+          {outputResult === "" ? (
+            <header id="header_result">{resultText}</header>
+          ) : isImage ? (
+            <img id="out_image" src={outputResult} alt="Result" height={300} />
           ) : (
-            <img
-              id="out_image"
-              src={resultImage}
-              alt="Result"
-              height={300}
-            />
+            <a href={outputResult} download='demo.mp4'>Download Result</a>
           )}
         </div>
+       
       </div>
     </form>
   );
