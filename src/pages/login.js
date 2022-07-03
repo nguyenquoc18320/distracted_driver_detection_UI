@@ -39,9 +39,14 @@ function Login() {
       })
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
+
+        if(data.data["user"]['role_id']==1){
         // <Navigate to="/manage-user" />;
-        // navigate("/manage-user");
-        navigate("/predict");
+        navigate("/manage-user");
+        }
+        else{
+          setError(true);
+        }
       })
       .catch(
         (error) => {

@@ -88,7 +88,7 @@ function ManageUsers() {
               <div className="div_detail">
                 <div className="div_num">
                   <div className="div_total_user">
-                    <p className="num_users">26</p>
+                    <p className="num_users">{data.length}</p>
                     <p className="label_total_user">total users</p>
                   </div>
                   <div className="div_unfocus_user">
