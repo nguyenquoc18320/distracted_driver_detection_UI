@@ -199,8 +199,8 @@
     border-color: #7C3AED;
 }
 
-.drag-area img,
-.div_output img {
+.drag-area img, video
+.div_output img, video{
     max-width: 100%;
     max-height: 288px;
     object-fit: cover;

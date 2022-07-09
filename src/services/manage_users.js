@@ -30,12 +30,13 @@ const loadUsers = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + Global.access_token,
+      Authorization: "Bearer " + localStorage.getItem('access_token'),
     },
   };
 
   //send to Api
   const response = await fetch(Global.api_url + "get-users", requestOptions);
+
   const json = await response.json();
   if (response.ok) {
     // setData(json);

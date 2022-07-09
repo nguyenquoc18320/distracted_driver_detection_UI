@@ -39,7 +39,19 @@ function Login() {
       })
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
+<<<<<<< HEAD
         navigate("/infor",{state: data.data["user"]})
+=======
+        localStorage.setItem('access_token', data.data["access_token"])
+
+        if(data.data["user"]['role_id']==1){
+        // <Navigate to="/manage-user" />;
+        navigate("/manage-user");
+        }
+        else{
+          setError(true);
+        }
+>>>>>>> b589af9f268e00c8c5c335668ab2df8d7c24a07f
       })
       .catch(
         (error) => {
