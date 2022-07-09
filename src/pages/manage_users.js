@@ -3,12 +3,14 @@ import "../styles/manage_users.css";
 import loadUsers from "../services/manage_users";
 import activateUser from "../services/activate_user";
 import deactivateUser from "../services/deactivate_user";
-import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaLock, FaLockOpen, FaPen } from "react-icons/fa";
 import robot_image from "../assets/images/robot_manage_user.png";
+import { useNavigate } from "react-router-dom";
 
 function ManageUsers() {
   var [data, setData] = React.useState([]);
   var [message, setMessage] = React.useState("");
+  const navigate = useNavigate();
 
   // Load user list
   React.useEffect(() => {
@@ -61,6 +63,10 @@ function ManageUsers() {
       alert("Cannot deactivate user. Please load page and try again!");
     }
   }
+    
+  const onClickAddUser = () =>{
+    navigate("/adduser")
+  }
 
   console.log(data);
   if (data == null) {
@@ -88,7 +94,7 @@ function ManageUsers() {
               <div className="div_detail">
                 <div className="div_num">
                   <div className="div_total_user">
-                    <p className="num_users">26</p>
+                    <p className="num_users">{data.length}</p>
                     <p className="label_total_user">total users</p>
                   </div>
                   <div className="div_unfocus_user">
@@ -103,6 +109,9 @@ function ManageUsers() {
             </div>
           </div>
         </div>
+        <div className="div_add_user">
+          <button  className="btn_adduser" onClick={onClickAddUser}> Add user</button>
+        </div>
         <div className="div_manage_user">
           <table>
             <thead>
@@ -115,6 +124,9 @@ function ManageUsers() {
                 <th className="status">Status</th>
                 <th className="activate-deactivate-action">
                   Activate/Deactivate
+                </th>
+                <th className="detail">
+                  Detail
                 </th>
               </tr>
             </thead>
@@ -170,6 +182,15 @@ function ManageUsers() {
                           }
                         ></FaLock>
                       )}
+                    </td>
+                    <td>
+                      <FaPen
+                        color="green"
+                        onClick={() =>
+                          navigate("/infor", {state: user})
+                        }
+                      >
+                      </FaPen>
                     </td>
                   </tr>
                 );

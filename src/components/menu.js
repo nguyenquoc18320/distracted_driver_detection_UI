@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/menu.css";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle, FaList,FaCarAlt, FaSignOutAlt, FaWindowClose} from "react-icons/fa";
+import { FaUserCircle, FaList,FaCarAlt, FaSignOutAlt, FaWindowClose, FaHighlighter} from "react-icons/fa";
 const Menu = function(props) {
   const navigate = useNavigate();
   const clickInfor = () =>{
@@ -9,6 +9,15 @@ const Menu = function(props) {
   }
   const clickPredict = () =>{
     navigate("/predict",{state: props.state})
+  }
+  const clickUpdate = () =>{
+    navigate("/update_infor",{state: props.state})
+  }
+  const clickUpdatePass = () =>{
+    navigate("/change_password",{state: props.state})
+  }
+  const clickBack = () =>{
+    navigate("/manage-user");
   }
     return (
       <div className="bm-menu-wrap">
@@ -18,20 +27,24 @@ const Menu = function(props) {
               <FaUserCircle>:: before</FaUserCircle>
               <span>Information</span>
             </a>
+            <a className="bm-item" onClick={clickUpdate}>
+              <FaHighlighter>:: before</FaHighlighter>
+              <span>Update User</span>
+            </a>
+            <a className="bm-item" onClick={clickUpdatePass}>
+              <FaHighlighter>:: before</FaHighlighter>
+              <span>Change Password</span>
+            </a>
             <a className="bm-item" onClick={clickPredict}>
               <FaCarAlt>:: before</FaCarAlt>
-              <span>Predict</span>
+              <span>Distraction</span>
             </a>
-            <a href="/#" className="bm-item">
-              <FaList>:: before</FaList>
-              <span>Statistics</span>
-            </a>
-            <a href="/#" className="bm-item">
+            <a className="bm-item" onClick={clickBack}>
               <FaSignOutAlt>:: before</FaSignOutAlt>
-              <span>Logout</span>
+              <span>Back</span>
             </a>
           </div>
-          <div className="bm-close">
+          <div className="bm-close" >
             <FaWindowClose className="btn-close" onClick={() => window.location.reload()} ></FaWindowClose>
           </div>
         </div> 

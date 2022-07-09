@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import "../styles/login.css";
 import Global from "../globals";
@@ -39,7 +41,14 @@ function Login() {
       })
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
-        navigate("/infor",{state: data.data["user"]})
+
+        if(data.data["user"]['role_id']==1){
+        // <Navigate to="/manage-user" />;
+        navigate("/manage-user");
+        }
+        else{
+          setError(true);
+        }
       })
       .catch(
         (error) => {
@@ -70,6 +79,7 @@ function Login() {
           <div className="div_error">
             {error === true ? <p>*Cannot login</p> : null}
           </div>
+
           <button onClick={() => clickLoginButton()}>Login</button>
         </div>
         <div className="div_info">
@@ -79,11 +89,6 @@ function Login() {
         </div>
       </div>
       <div></div>
-      <div className="div_register">
-          <p>You don't have an account?.</p>
-          <a href = "/adduser">Register now!</a>
-          <a href="/password_reset">Forget Password</a>
-      </div>
     </>
   );
 }

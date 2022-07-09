@@ -1,3 +1,10 @@
+.div_background{
+    height: 100%;
+    background-image: url("../assets/images/top_bg_image.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 70% 500px;
+}
 .container{
     margin-left: 10%;
     margin-right: 10%;
@@ -50,6 +57,7 @@
     padding: 16px 20px;
     position: relative;
     text-align: center;
+    font-weight: bold;
 
 }
 

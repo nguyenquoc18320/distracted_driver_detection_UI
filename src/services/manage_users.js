@@ -14,7 +14,7 @@ async function get_users(){
           return response.json();
         })
         .then((data) => {
-            // console.log(data.data);
+            console.log(data.data);
             return data.data;
         })
         .catch(
