@@ -39,6 +39,7 @@ function Login() {
       })
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
+        localStorage.setItem('access_token', data.data["access_token"])
 
         if(data.data["user"]['role_id']==1){
         // <Navigate to="/manage-user" />;
@@ -59,29 +60,6 @@ function Login() {
 
   return (
     <>
-      <div className="title">
-        <h3>AI - Distracted Driver Detection System</h3>
-      </div>
-      <div className="div_login">
-        <p>Login to account</p>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={(e) => changeUserNameValue(e)}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={(e) => changePasswordValue(e)}
-        ></input>        
-        <button onClick={() => clickLoginButton()}>Login</button>
-      </div>
-      <div className="div_register">
-          <p>You don't have an account?.</p>
-          <a href = "/adduser">Register now!</a>
-      </div>
       <div className="div_all">
         <div className="div_login">
           <p>Welcom back</p>

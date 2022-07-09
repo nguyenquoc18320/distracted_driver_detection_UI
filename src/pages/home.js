@@ -86,10 +86,10 @@ function Home() {
 
         setVideo(myFile);
 
-          // const videoObjectURL = URL.createObjectURL(result, {
-          //   type: "video/mp4",
-          // });
-          const videoObjectURL = URL.createObjectURL(video);
+          const videoObjectURL = URL.createObjectURL(result, {
+            type: "video/mp4",
+          });
+          // const videoObjectURL = URL.createObjectURL(video);
           // console.log(myFile);
 
           setOutputResult(videoObjectURL);
