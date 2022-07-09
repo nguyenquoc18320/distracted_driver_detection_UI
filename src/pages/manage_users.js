@@ -3,7 +3,7 @@ import "../styles/manage_users.css";
 import loadUsers from "../services/manage_users";
 import activateUser from "../services/activate_user";
 import deactivateUser from "../services/deactivate_user";
-import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaLock, FaLockOpen, FaPen } from "react-icons/fa";
 import robot_image from "../assets/images/robot_manage_user.png";
 import getTotalDistractionForAll from "../services/get_total_distraction_for_all";
 import getNumDistractionByUser from "../services/get_num_distraction_by_user";
@@ -12,6 +12,7 @@ import ReactPaginate from "react-paginate";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useNavigate } from "react-router-dom";
 
 function ManageUsers() {
   var [userList, setUserList] = React.useState([]);
@@ -23,6 +24,7 @@ function ManageUsers() {
   var [selectedDate, setSelectedDate] = React.useState( today  );
   var [totalDistractionPage, setTotalDistractionPage] = React.useState(1);
   const items_per_page = 10;
+  const navigate = useNavigate();
 
   // Load user list
   React.useEffect(() => {
@@ -91,6 +93,10 @@ function ManageUsers() {
     } else {
       alert("Cannot deactivate user. Please load page and try again!");
     }
+  }
+    
+  const onClickAddUser = () =>{
+    navigate("/adduser")
   }
 
   // change page distraction
@@ -202,6 +208,9 @@ function ManageUsers() {
             </div>
           </div>
         </div>
+        <div className="div_add_user">
+          <button  className="btn_adduser" onClick={onClickAddUser}> Add user</button>
+        </div>
         <div className="div_manage_user">
           <table>
             <thead>
@@ -214,6 +223,9 @@ function ManageUsers() {
                 <th className="status">Status</th>
                 <th className="activate-deactivate-action">
                   Activate/Deactivate
+                </th>
+                <th className="detail">
+                  Detail
                 </th>
               </tr>
             </thead>
@@ -279,6 +291,15 @@ function ManageUsers() {
                           }
                         ></FaLock>
                       )}
+                    </td>
+                    <td>
+                      <FaPen
+                        color="green"
+                        onClick={() =>
+                          navigate("/infor", {state: user})
+                        }
+                      >
+                      </FaPen>
                     </td>
                   </tr>
                 );

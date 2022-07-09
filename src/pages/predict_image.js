@@ -36,8 +36,6 @@ function PredictImage(){
 			});
 		
 	};
-
-
 	return(
    <div>
 			<input type="file" name="file" onChange={changeHandler} />

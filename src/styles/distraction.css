@@ -1,0 +1,31 @@
+.div_dashboard_distraction {
+    height: 100%;
+    background-image: url("../assets/images/top_bg_image.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 70% 500px;
+}
+.div_header_distrac {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 45%;
+}
+.div_name_product_distrac {
+    display: flex;
+    vertical-align: middle;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1A6557;
+}
+.time{
+    width: 200px;
+}
+.category{
+    width: 250px;
+}
+.image{
+    width: 150px;
+}

@@ -1,3 +1,10 @@
+.div_background{
+    height: 100%;
+    background-image: url("../assets/images/top_bg_image.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 70% 500px;
+}
 .container{
     margin-left: 10%;
     margin-right: 10%;
@@ -50,17 +57,30 @@
     padding: 16px 20px;
     position: relative;
     text-align: center;
+    font-weight: bold;
 
 }
 
 .btn_register:hover {
-    background-color: #059432;
+    background-color: #3103ba;
     transform: translateY(-2px);
 }
-/* 
-@media (min-width: 768px) {
-    .btn_register {
-    padding: 16px 44px;
-    min-width: 150px;
-  }
-} */
+
+.div_format_gender{
+    display: block;
+    font-weight: bold;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.div_gender{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    
+}
+.div_gender input{
+    margin-left: 30px;
+}
+.div_gender p{
+    margin: 10px;
+}

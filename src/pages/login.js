@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import "../styles/login.css";
 import Global from "../globals";
@@ -39,7 +41,9 @@ function Login() {
       })
       .then((data) => {
         Global.updateAccessToken(data.data["access_token"]);
+
         localStorage.setItem('access_token', data.data["access_token"])
+
 
         if(data.data["user"]['role_id']==1){
         // <Navigate to="/manage-user" />;
@@ -48,6 +52,7 @@ function Login() {
         else{
           setError(true);
         }
+
       })
       .catch(
         (error) => {

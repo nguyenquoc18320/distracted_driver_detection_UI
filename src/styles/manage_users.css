@@ -260,3 +260,26 @@ ul.pagination li a.active {
     justify-content: space-between;
     margin-top: 10px;
 } 
+.div_add_user{
+   margin-left: 77%;
+}
+.btn_adduser{
+    color: #000;
+    font-weight: bold;
+    width: 100px;
+    background-color: #027f17;
+    border-radius: 2px;
+    border: 0;
+    display: inherit;
+    padding: 10px 15px;
+    position: relative;
+    text-align: center;
+}
+.btn_adduser:hover{
+    background-color: #012508;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.detail{
+    width: 100px;
+}

@@ -1,24 +1,14 @@
-html
-{
-height: 100%;
-}
-body
-{
-    min-height: 100%;
-}
-
-#root{
-    height: 100vh;
-}
-
-.App{
-    min-height: 100%;
+html,
+body,
+#root,
+.App {
+    height: 100%;
 }
 
 .div_all {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 100%;
 
     background-image: url("../assets/images/top_bg_image.png");
     background-position: right top;
@@ -124,6 +114,12 @@ input:-webkit-autofill:focus {
     font-size: 18px;
     margin: 20px 0px 0px 0px;
 }
+
+.div_info img {
+    width: 503px;
+    height: 412px;
+    margin-top: 20px;
+}
 .div_login input{
     width: 242px;
     margin: 8px;
@@ -140,8 +136,12 @@ input:-webkit-autofill:focus {
     padding-left: 5px;
     font-size: 16;
 }
-.div_info img {
-    width: 503px;
-    height: 412px;
-    margin-top: 20px;
-}
+
+
+
+
+
+
+
+
+
