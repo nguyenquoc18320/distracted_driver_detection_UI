@@ -15,20 +15,24 @@ function Predict(){
     const [showResults, setShowResults] = React.useState(false)
     const onClickMenu = () => setShowResults(true)
 	const [showImage, setShowImage] = React.useState(false)
-	const onClickImage = () => setShowImage(true
-		 
-	)
+	const onClickImage = () => setShowImage(true)
+	const [resultImage, setResultImage] = React.useState([]);
+
 	const getImagegbyPath = async (path) => {		
 		var result = await getImage(path);
 		if (result != null) {
 			const imageObjectURL = URL.createObjectURL(result);
-			setResultImage(imageObjectURL);
+			setResultImage((images) => [
+				...images,
+				{
+					img: imageObjectURL,
+				},
+			]);
+			
 		} else {
 			console.log("error");
 		}		
-	  };
-	const [resultImage, setResultImage] = React.useState("");
-	
+	};	
 	React.useEffect(() => {
 		setUser(location.state)
 		distractionUser(location.state.id)
@@ -38,6 +42,15 @@ function Predict(){
 		.catch((e) => {
 			console.log(e.message);
 		});
+		var lengthImg = data.length;
+		if (lengthImg > 0 ) {
+			for (var i = 0; i < lengthImg; i++) {
+				var a = JSON.stringify(data[i]);
+				var b = JSON.parse(a);
+				console.log(b);
+				getImagegbyPath(b.image_path);
+			}
+		}
 	}, []);
 	return (
 
@@ -64,44 +77,31 @@ function Predict(){
 					</tr>
 					</thead>
 					<tbody>
+					{
+						data.map((item)=>{
+							var stringDT = JSON.stringify(item);
+						
+							var distrac = JSON.parse(stringDT);
+							// getImagegbyPath(distrac.image_path);
+						})
+					}
 					{data.map((item, idx) => {
 						var stringDistrac = JSON.stringify(item);
 						
 						var distraction = JSON.parse(stringDistrac);
-						// getImage(distraction.image_path);
-						// var result = getImage(distraction.image_path);
-						// img = getImagegbyPath(result)
-						// console.log(result);
-						// if (result != null) {
-						// 	var imageObjectURL = URL.createObjectURL(result);
-						// 	setResultImage(imageObjectURL);
-						// 	imageObjectURL = "";
-						// } else {
-						// 	console.log("error");
-						// }
-						// const imageObjectURL = URL.createObjectURL(getImage(distraction.image_path));
-						// setResultImage(imageObjectURL);
-						// var date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(distraction.time)
-						
+						console.log(resultImage);
 						return (
-							<tr key={idx}>
+							<tr key={idx}>								
 								<td>{idx + 1}</td>
 								<td>{distraction.time}</td>
-								<td >{distraction.category}</td>						
-								<td>					
-									<img
-										src={getImagegbyPath(distraction.image_path)}
-										height={250}
-									/>
-								
-									{/* <FaImage
-										color="green"
-										onClick={onClickImage(distraction)}
-									>
-									</FaImage> */}
-									{/* { showImage ? <ShowImage state={distraction} /> : null } */}
-									
-								</td>
+								<td >{distraction.category}</td>														
+								<td>														
+									<img										
+										src={resultImage[idx].img}
+										height={150}
+										width={200}
+									/>								
+								</td>							
 							</tr>
 						);
 					})}
