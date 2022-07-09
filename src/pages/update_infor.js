@@ -11,7 +11,6 @@ function UpdateUser() {
     const [gender, setGender]= React.useState(true)
     const [birthday, setBirthday] = React.useState(Date);
     const [phone, setPhone] = React.useState();
-    var gender_current = '';
     const [showResults, setShowResults] = React.useState(false)
     const onClickMenu = () => setShowResults(true)
     //get user
@@ -26,19 +25,11 @@ function UpdateUser() {
         setPhone(location.state.phone)
  
     },[]);
-
-    if (data.gender===1){
-        gender_current = 'Male';
-    }else{
-        gender_current = 'Female';
-    }
     function changeNameValue(e) {
         setName(e.target.value);
     }
 
-    function changeGender(e) {
-        setGender(e.target.value);
-    }
+    const changeGender = () => setGender(value => !value);
     function changeBirthday(e) {
         setBirthday(e.target.value);
     }
@@ -49,7 +40,8 @@ function UpdateUser() {
     async function clickUpdateButton() {
         const requestOptions = {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+        "Authorization": "Bearer " + Global.access_token},
         body: JSON.stringify({
             id: data.id,
             name: name,
@@ -64,6 +56,7 @@ function UpdateUser() {
         })
         .then((data) => {
             // Global.updateAccessToken(data.data["access_token"]);
+            alert(data.data["alert"])
             navigate("/infor",{state: data.data["user"]})
         })
         .catch(
@@ -73,19 +66,19 @@ function UpdateUser() {
 
     return (
         
-        
+        <div className='div_background'>
         <div className='container'>
             <div className="div-menu-icon">
                 <FaRegListAlt className="div-menu-icon2" onClick={onClickMenu} />
                 { showResults ? <Menu state={data}/> : null }               
             </div>
-            <div className='div_header'>
+            <div className='div_header_distrac'>
                 <h2>Update Information</h2>
             </div>
             <div className='div_body'>
                 <div className='div_format'>
                     <p>Name:</p>
-                    <input type="text" name="name" placeholder='Your name' value={name} onChange={(e) => changeNameValue(e)} required="required"   ></input>
+                    <input type="text" name="name" placeholder='Name' value={name} onChange={(e) => changeNameValue(e)} required="required"   ></input>
                 </div>
                 <div className='div_format'>
                     <p>Driver License:</p>
@@ -95,9 +88,9 @@ function UpdateUser() {
                 <div className='div_format_gender'>
                     <p>Gender:</p>
                     <div className='div_gender'>
-                        <input type="radio" id="gender1" name="gender" onChange={(e) => changeGender(e)} checked = {gender_current==='Male'}></input>
+                        <input type="radio" id="gender1" name="gender" onChange={changeGender} checked = {gender}></input>
                         <p for="gender1">Male</p>
-                        <input type="radio" id="gender2" name="gender" onChange={(e) => changeGender(e)} checked = {gender_current==='Female'} ></input>
+                        <input type="radio" id="gender2" name="gender" onChange={changeGender} checked = {!gender} ></input>
                         <p for="gender2">Female</p>
                         
                     </div>
@@ -108,7 +101,7 @@ function UpdateUser() {
                 </div>
                 <div className='div_format'>
                     <p>Phone:</p>
-                    <input type="text" name="phone" value={phone} placeholder='Your phone' onChange={(e) => changePhoneValue(e)} required></input>
+                    <input type="text" name="phone" value={phone} placeholder='Phone' onChange={(e) => changePhoneValue(e)} required></input>
                 </div>
                 <div className='div_format'>
                     <button className='btn_register' onClick={() => clickUpdateButton()}>Update</button>
@@ -116,7 +109,7 @@ function UpdateUser() {
                 
             </div>
         </div> 
-            
+        </div>
     ); 
 }
 

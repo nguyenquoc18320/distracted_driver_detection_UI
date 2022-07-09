@@ -13,6 +13,7 @@ import Information from "./pages/infor";
 import Menu from "./components/menu";
 import ButtonInfor from "./components/btn_infor";
 import UpdateUser from './pages/update_infor';
+import ShowImage from "./components/show_img";
  function App() {
     return (
         <div className="App">
@@ -30,6 +31,7 @@ import UpdateUser from './pages/update_infor';
           <Route element={<ButtonInfor/>}/>
           <Route path="/menu" element={<Menu/>}/>
           <Route path="/update_infor" element={<UpdateUser/>}/>
+          <Route path="/showimg" element={<ShowImage/>}/>
         </Routes>
       </Router>
     </div>

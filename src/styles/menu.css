@@ -12,7 +12,7 @@
     width: 300px;
     height: 100%;
     transition: all 0.5s ease 0s;
-    background-color: #4e4a46;
+    background-color: #40E3BD;
     top: 0px;
     left: 0px;
 }
@@ -30,13 +30,13 @@
     margin-left: 10px;
     font-weight: 700;
     font-size: 22px;
-    color: #b8b7ad;
+    color: #090907;
 }
 .bm-item-list a span:hover{
     color: #d23131;
 }
 .bm-menu a{
-    color:#b8b7ad;
+    color:#090907;
     padding: 0.8em;
 }
 .bm-menu a:hover{
@@ -86,4 +86,24 @@
 }
 .bm-btn-wrap button:hover{
     background: #4e4a46;
+}
+
+
+.bm-show{
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+    font-size: 1.15em;
+    padding: 2.5em 1.5em 0;
+}
+.bm-wrap{
+    position: fixed;
+    right: inherit;
+    z-index: 1100;
+    width: 450px;
+    height: 40%;
+    transition: all 0.5s ease 0s;
+    background-color: #40E3BD;
+    top: 30%;
+    left: 40%;
 }
