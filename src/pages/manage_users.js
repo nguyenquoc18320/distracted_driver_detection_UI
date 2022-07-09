@@ -5,20 +5,51 @@ import activateUser from "../services/activate_user";
 import deactivateUser from "../services/deactivate_user";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import robot_image from "../assets/images/robot_manage_user.png";
+import getTotalDistractionForAll from "../services/get_total_distraction_for_all";
+import getNumDistractionByUser from "../services/get_num_distraction_by_user";
+import getDistractionStatistic from "../services/get_statistic_distraction";
+import ReactPaginate from "react-paginate";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function ManageUsers() {
-  var [data, setData] = React.useState([]);
+  var [userList, setUserList] = React.useState([]);
   var [message, setMessage] = React.useState("");
+  var [totalDistraction, setTotalDistraction] = React.useState();
+  var [distractionList, setDistractionList] = React.useState([]);
+  var [page, setPage] = React.useState(1);
+  var today = new Date();
+  var [selectedDate, setSelectedDate] = React.useState( today  );
+  var [totalDistractionPage, setTotalDistractionPage] = React.useState(1);
+  const items_per_page = 10;
 
   // Load user list
   React.useEffect(() => {
     loadUsers()
       .then((res) => {
-        setData(res);
+        setUserList(res);
       })
       .catch((e) => {
         console.log(e.message);
       });
+
+    //get
+    getTotalDistractionForAll()
+      .then((res) => {
+        setTotalDistraction(res);
+      })
+      .catch((e) => {});
+
+    //get distraction statistic
+    var today = new Date();
+    getDistractionStatistic(today, 1, items_per_page)
+      .then((res) => {
+        setPage(res.page);
+        setTotalDistractionPage(res.total_pages);
+        setDistractionList(res.data);
+      })
+      .catch((e) => {});
   }, []);
 
   //change active status of an account
@@ -32,7 +63,7 @@ function ManageUsers() {
       // load users
       loadUsers()
         .then((res) => {
-          setData(res);
+          setUserList(res);
         })
         .catch((e) => {
           console.log(e.message);
@@ -52,7 +83,7 @@ function ManageUsers() {
       // load users
       loadUsers()
         .then((res) => {
-          setData(res);
+          setUserList(res);
         })
         .catch((e) => {
           console.log(e.message);
@@ -62,14 +93,39 @@ function ManageUsers() {
     }
   }
 
-  console.log(data);
-  if (data == null) {
+  // change page distraction
+  const changDistractinoPage= (event) =>{
+   const selectedPage = event.selected+1;
+
+    getDistractionStatistic(selectedDate, selectedPage, items_per_page)
+      .then((res) => {
+        setPage(res.page);
+        setTotalDistractionPage(res.total_pages);
+        setDistractionList(res.data);
+      })
+      .catch((e) => {});
+  };
+
+  const changeDate= (date) =>{ 
+
+     getDistractionStatistic(date, 1, items_per_page)
+       .then((res) => {
+        setSelectedDate(date);
+         setPage(res.page);
+         setTotalDistractionPage(res.total_pages);
+         setDistractionList(res.data);
+       })
+       .catch((e) => {});
+   };
+
+  if (userList == null) {
     return (
       <div className="div_error">
         <p>You DON'T have permission to access this function!</p>
       </div>
     );
   }
+
   return (
     <div className="div_dashboard">
       <div className="div_header">
@@ -88,11 +144,11 @@ function ManageUsers() {
               <div className="div_detail">
                 <div className="div_num">
                   <div className="div_total_user">
-                    <p className="num_users">{data.length}</p>
+                    <p className="num_users">{userList.length}</p>
                     <p className="label_total_user">total users</p>
                   </div>
                   <div className="div_unfocus_user">
-                    <p className="num_users">26</p>
+                    <p className="num_users">{totalDistraction}</p>
                     <p className="label_total_user">distractions</p>
                   </div>
                 </div>
@@ -100,6 +156,49 @@ function ManageUsers() {
                   <img src={robot_image} alt="robot" />
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="div_tabel_distraction">
+          <DatePicker selected={selectedDate} onChange={(date) =>{changeDate(date)}} />
+            <table>
+              <thead>
+                <tr>
+                  <th className="id">ID</th>
+                  <th className="name">Name</th>
+                  <th className="phone">Phone</th>
+                  <th className="distraction">Distraction</th>
+                </tr>
+              </thead>
+              <tbody>
+                {distractionList.map((item, idx) => {
+                  var stringUser = JSON.stringify(item.User);
+                  var user = JSON.parse(stringUser);
+
+                  var numDistraction = JSON.stringify(item.num_distractions);
+
+                  return (
+                    <tr key={idx}>
+                      <td>{idx + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.phone}</td>
+                      <td>{numDistraction}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div >
+              <ReactPaginate
+              className="pagination"
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={changDistractinoPage}
+                pageRangeDisplayed={5}
+                pageCount={totalDistractionPage}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                disabledClassName={null}
+              />
             </div>
           </div>
         </div>
@@ -119,7 +218,7 @@ function ManageUsers() {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, idx) => {
+              {userList.map((item, idx) => {
                 var stringUser = JSON.stringify(item.User);
                 var user = JSON.parse(stringUser);
 
@@ -136,9 +235,19 @@ function ManageUsers() {
                     <td>
                       <div className="div_status_col">
                         {account.status ? (
-                          <p className="label_active_deactive" style={{backgroundColor: "#FFC700"}}>Active</p>
+                          <p
+                            className="label_active_deactive"
+                            style={{ backgroundColor: "#FFC700" }}
+                          >
+                            Active
+                          </p>
                         ) : (
-                          <p className="label_active_deactive" style={{backgroundColor: "#DEDEDE"}}>Deactive</p>
+                          <p
+                            className="label_active_deactive"
+                            style={{ backgroundColor: "#DEDEDE" }}
+                          >
+                            Deactive
+                          </p>
                         )}
                       </div>
                     </td>

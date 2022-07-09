@@ -12,6 +12,14 @@
     align-items: flex-start;
 }
 
+
+.div_distraction {
+    display: flex;
+    align-content: center;
+    width: 100%;
+    justify-content: center;
+}
+
 .div_total_statistic p {
     margin: 0px;
     font-weight: 700;
@@ -61,10 +69,54 @@
     height: 250px;
 }
 
+/* ----Distraction table----- */
+.div_tabel_distraction {
+    margin-left: 30px;
+}
+
+.react-datepicker__input-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    flex-direction: row;
+    align-content: end;
+    justify-content: flex-end;
+}
+
+.div_tabel_distraction table {
+    border-collapse: collapse;
+    margin-top: 16px;
+
+}
+
+.div_tabel_distraction th,
+td {
+    border: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.div_tabel_distraction .id {
+    width: 50px;
+}
+
+.div_tabel_distraction .name {
+    width: 200px;
+}
+
+.div_tabel_distraction .phone {
+    width: 150px;
+}
+
+.div_tabel_distraction .distraction {
+    width: 200px;
+}
 
 /* -----MANAGE USER-----*/
 .div_manage_user {
     margin-top: 20px;
+    margin-bottom: 32px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -78,7 +130,7 @@
     border-radius: 40px;
 }
 
-.div_status_col{
+.div_status_col {
     display: flex;
     align-content: center;
     align-items: center;
@@ -99,11 +151,11 @@
     font-size: 16px;
 }
 
-table {
+.div_manage_user table {
     border-collapse: collapse;
 }
 
-th,
+.div_manage_user th,
 td {
     border: 1px solid;
     text-align: center;
@@ -111,35 +163,100 @@ td {
 }
 
 
-.id {
+.div_manage_user .id {
     width: 50px;
 }
 
-.name {
+.div_manage_user .name {
     width: 200px;
 }
 
-.gender {
+.div_manage_user .gender {
     width: 100px;
 }
 
-.date-of-birth {
+.div_manage_user .date-of-birth {
     width: 150px;
 }
 
-.phone {
+.div_manage_user .phone {
     width: 120px;
 }
 
-.status {
+.div_manage_user .status {
     width: 100px;
 }
 
-.activatet-deactivate-action {
+.div_manage_user .activatet-deactivate-action {
     width: 200px;
 }
 
-td button {
+.div_manage_user td button {
     background: transparent;
     border-color: transparent;
 }
+
+/*  PAGINATION */
+.pagination {
+    justify-content: center;
+    display: flex;
+
+    
+}
+
+
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul.pagination li {
+    display: inline-block;
+    /* border: 1px solid #e2e2e2; */
+    display: flex;
+    justify-content: center;
+    margin: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+ul.pagination li a {
+    text-decoration: none;
+    color: #84897D;
+    font-size: 16px;
+}
+
+/* .pagination_link_disable a{
+    color: grey;
+} */
+
+ul.pagination li.selected a {
+    color: #337ab7;
+    font-weight: bold;
+}
+
+ul.pagination li.active {
+    background-color: #337ab7;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+    color: blue;
+}
+
+ul.pagination li a.active {
+    color: blue;
+}
+
+.page-selection {
+    width: 48px;
+    height: 30px;
+    color: #337ab7;
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+} 
