@@ -13,24 +13,36 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useNavigate } from "react-router-dom";
+import getTotalUsers from "../services/get_total_user";
 
 function ManageUsers() {
   var [userList, setUserList] = React.useState([]);
   var [message, setMessage] = React.useState("");
   var [totalDistraction, setTotalDistraction] = React.useState();
+  var [totalUsers, setTotalUsers] = React.useState(1);
+  var [totalUserPage, setTotalUserPage] = React.useState();
   var [distractionList, setDistractionList] = React.useState([]);
-  var [page, setPage] = React.useState(1);
+  var [distractionPage, setDistractionPage] = React.useState(1);
+  var [userPage, setUserPage] = React.useState(1);
   var today = new Date();
-  var [selectedDate, setSelectedDate] = React.useState( today  );
+  var [selectedDate, setSelectedDate] = React.useState(today);
   var [totalDistractionPage, setTotalDistractionPage] = React.useState(1);
   const items_per_page = 10;
   const navigate = useNavigate();
 
   // Load user list
   React.useEffect(() => {
-    loadUsers()
+    //get total users
+    getTotalUsers().then((res) => {
+      setTotalUsers(res);
+    });
+
+    loadUsers(1, items_per_page)
       .then((res) => {
-        setUserList(res);
+        // console.log(res.total_pages);
+        setUserList(res.data);
+        setTotalUserPage(res.total_pages);
+        setUserPage(res.page);
       })
       .catch((e) => {
         console.log(e.message);
@@ -47,7 +59,7 @@ function ManageUsers() {
     var today = new Date();
     getDistractionStatistic(today, 1, items_per_page)
       .then((res) => {
-        setPage(res.page);
+        setDistractionPage(res.page);
         setTotalDistractionPage(res.total_pages);
         setDistractionList(res.data);
       })
@@ -63,9 +75,11 @@ function ManageUsers() {
       alert("Activate user successfully!");
 
       // load users
-      loadUsers()
+      loadUsers(userPage, items_per_page)
         .then((res) => {
-          setUserList(res);
+          setUserList(res.data);
+          setTotalUserPage(res.total_pages);
+          setUserPage(res.page);
         })
         .catch((e) => {
           console.log(e.message);
@@ -83,9 +97,11 @@ function ManageUsers() {
       alert("Deactivate user successfully!");
 
       // load users
-      loadUsers()
+      loadUsers(userPage, items_per_page)
         .then((res) => {
-          setUserList(res);
+          setUserList(res.data);
+          setTotalUserPage(res.total_pages);
+          setUserPage(res.page);
         })
         .catch((e) => {
           console.log(e.message);
@@ -94,35 +110,47 @@ function ManageUsers() {
       alert("Cannot deactivate user. Please load page and try again!");
     }
   }
-    
-  const onClickAddUser = () =>{
-    navigate("/adduser")
-  }
+
+  const onClickAddUser = () => {
+    navigate("/adduser");
+  };
 
   // change page distraction
-  const changDistractinoPage= (event) =>{
-   const selectedPage = event.selected+1;
+  const changeDistractionPage = (event) => {
+    const selectedPage = event.selected + 1;
 
     getDistractionStatistic(selectedDate, selectedPage, items_per_page)
       .then((res) => {
-        setPage(res.page);
+        setDistractionPage(res.page);
         setTotalDistractionPage(res.total_pages);
         setDistractionList(res.data);
       })
       .catch((e) => {});
   };
 
-  const changeDate= (date) =>{ 
+  //change page for user
+  const changeUserPage = (event) => {
+    const selectedPage = event.selected + 1;
 
-     getDistractionStatistic(date, 1, items_per_page)
-       .then((res) => {
+    loadUsers(selectedPage, items_per_page)
+      .then((res) => {
+        setUserPage(res.page);
+        setTotalUserPage(res.total_pages);
+        setUserList(res.data);
+      })
+      .catch((e) => {});
+  };
+
+  const changeDate = (date) => {
+    getDistractionStatistic(date, 1, items_per_page)
+      .then((res) => {
         setSelectedDate(date);
-         setPage(res.page);
-         setTotalDistractionPage(res.total_pages);
-         setDistractionList(res.data);
-       })
-       .catch((e) => {});
-   };
+        setDistractionPage(res.page);
+        setTotalDistractionPage(res.total_pages);
+        setDistractionList(res.data);
+      })
+      .catch((e) => {});
+  };
 
   if (userList == null) {
     return (
@@ -132,11 +160,27 @@ function ManageUsers() {
     );
   }
 
+  function logout() {
+    localStorage.setItem("access_token", "");
+    navigate("/login");
+  }
+
   return (
     <div className="div_dashboard">
       <div className="div_header">
         <div className="div_name_product">Predict Driver Status - AI</div>
-        <div className="div_button_login"></div>
+        <div className="div_button_logout">
+          {" "}
+          <input
+            type="button"
+            className="button_format_data"
+            id="button_logout"
+            onClick={() =>
+              window.confirm("Are you sure you want to logout?") ? logout() : {}
+            }
+            defaultValue="Logout"
+          />
+        </div>
       </div>
       <div className="div_info_student">
         The Product created by Nguyễn Anh Quốc and Nguyễn Phan Sự
@@ -150,7 +194,7 @@ function ManageUsers() {
               <div className="div_detail">
                 <div className="div_num">
                   <div className="div_total_user">
-                    <p className="num_users">{userList.length}</p>
+                    <p className="num_users">{totalUsers}</p>
                     <p className="label_total_user">total users</p>
                   </div>
                   <div className="div_unfocus_user">
@@ -165,7 +209,12 @@ function ManageUsers() {
             </div>
           </div>
           <div className="div_tabel_distraction">
-          <DatePicker selected={selectedDate} onChange={(date) =>{changeDate(date)}} />
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => {
+                changeDate(date);
+              }}
+            />
             <table>
               <thead>
                 <tr>
@@ -193,12 +242,12 @@ function ManageUsers() {
                 })}
               </tbody>
             </table>
-            <div >
+            <div>
               <ReactPaginate
-              className="pagination"
+                className="pagination"
                 breakLabel="..."
                 nextLabel="next >"
-                onPageChange={changDistractinoPage}
+                onPageChange={changeDistractionPage}
                 pageRangeDisplayed={5}
                 pageCount={totalDistractionPage}
                 previousLabel="< previous"
@@ -209,7 +258,10 @@ function ManageUsers() {
           </div>
         </div>
         <div className="div_add_user">
-          <button  className="btn_adduser" onClick={onClickAddUser}> Add user</button>
+          <button className="btn_adduser" onClick={onClickAddUser}>
+            {" "}
+            Add user
+          </button>
         </div>
         <div className="div_manage_user">
           <table>
@@ -224,9 +276,7 @@ function ManageUsers() {
                 <th className="activate-deactivate-action">
                   Activate/Deactivate
                 </th>
-                <th className="detail">
-                  Detail
-                </th>
+                <th className="detail">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -295,17 +345,25 @@ function ManageUsers() {
                     <td>
                       <FaPen
                         color="green"
-                        onClick={() =>
-                          navigate("/infor", {state: user})
-                        }
-                      >
-                      </FaPen>
+                        onClick={() => navigate("/infor", { state: user })}
+                      ></FaPen>
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          <ReactPaginate
+            className="pagination"
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={changeUserPage}
+            pageRangeDisplayed={5}
+            pageCount={totalUserPage}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+            disabledClassName={null}
+          />
         </div>
       </div>
     </div>

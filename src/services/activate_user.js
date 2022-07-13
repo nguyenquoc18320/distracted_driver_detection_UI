@@ -5,7 +5,7 @@ import Global from "../globals";
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + Global.access_token,
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     };
   
