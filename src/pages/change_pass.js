@@ -29,7 +29,7 @@ function UpdatePassword() {
         if(password === confirm_password){
             const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json","Authorization": "Bearer " + Global.access_token },
+            headers: { "Content-Type": "application/json"}, //"Authorization": "Bearer " + Global.access_token },
             body: JSON.stringify({
                 id: user.id,
                 newpassword: password,

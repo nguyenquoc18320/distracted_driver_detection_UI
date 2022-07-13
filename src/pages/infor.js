@@ -40,10 +40,10 @@ function Information() {
                 { showResults ? <Menu state={data} /> : null }               
             </div>
             <div className="div-border">
-                <div className="div-update-infor">
+                {/* <div className="div-update-infor">
                     <FaUserCircle className="div-menu-icon2"  onClick={onClickButtonChangeInfor} ></FaUserCircle>
                     { showButtons ? <ButtonInfor state={data} ></ButtonInfor> : null } 
-                </div>
+                </div> */}
                
                 <h3>Information</h3>
                 <p>Name: {data.name}</p>
