@@ -40,10 +40,9 @@ function Login() {
         return response.json();
       })
       .then((data) => {
-        Global.updateAccessToken(data.data["access_token"]);
+        // Global.updateAccessToken(data.data["access_token"]);
 
         localStorage.setItem('access_token', data.data["access_token"])
-
 
         if(data.data["user"]['role_id']==1){
         // <Navigate to="/manage-user" />;

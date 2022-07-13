@@ -9,7 +9,7 @@
     margin-top: 0px;
 }
 
-.div_header {
+#form1 .div_header {
     height: 80px;
     display: flex;
     justify-content: space-between;

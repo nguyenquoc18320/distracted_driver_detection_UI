@@ -5,10 +5,10 @@ import Global from "../globals";
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + Global.access_token,
+        Authorization: "Bearer " + localStorage.getItem("access_token")
       },
     };
-  
+    
     //send to Api
     const response = await fetch(Global.api_url + "deactivate-user?accountid=" + accountid, requestOptions);
     const json = await response.json();

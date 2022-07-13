@@ -5,7 +5,7 @@ const distractionUser = async (userid) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + Global.access_token,
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     };
     //send to Api
