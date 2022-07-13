@@ -46,7 +46,9 @@ function AddUsers() {
                 const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json",
-                "Authorization": "Bearer " + Global.access_token},
+                // "Authorization": "Bearer " + Global.access_token
+                Authorization: "Bearer " + localStorage.getItem("access_token")
+                },
                 body: JSON.stringify({
                     name: name,
                     driver_license: driver_license,
@@ -67,8 +69,12 @@ function AddUsers() {
                     navigate("/manage-user");
                 })
                 .catch(
-                    (error) => console.log(error) // Handle the error response object
-                );
+                    (error) => {console.log(error)
+                        alert("Fail !!!");
+                    }
+                )
+                
+                ;
             }else{
                 alert("Confirmation password is not correct!!!")
             }
@@ -81,7 +87,7 @@ function AddUsers() {
         <div className='div_background'>
         <div className='container'>
             <div className='div_header_distrac'>
-                <h2>New Account</h2>
+                <h1>New Account</h1>
             </div>
             <div className='div_body'>
             <div className='div_convert'>

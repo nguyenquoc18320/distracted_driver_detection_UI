@@ -76,6 +76,10 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
+    border: 0.5px solid black;
+    border-radius: 4px;
+    width: 250px;
+    margin-left: 35%;
     
 }
 .div_gender input{
