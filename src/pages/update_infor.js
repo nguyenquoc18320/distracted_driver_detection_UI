@@ -41,7 +41,8 @@ function UpdateUser() {
         const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json",
-        "Authorization": "Bearer " + Global.access_token},
+        Authorization: "Bearer " + localStorage.getItem("access_token")
+        },
         body: JSON.stringify({
             id: data.id,
             name: name,
@@ -60,7 +61,8 @@ function UpdateUser() {
             navigate("/infor",{state: data.data["user"]})
         })
         .catch(
-            (error) => console.log(error) // Handle the error response object
+            (error) => {console.log(error)
+            } // Handle the error response object
         );
       }
 
@@ -73,7 +75,7 @@ function UpdateUser() {
                 { showResults ? <Menu state={data}/> : null }               
             </div>
             <div className='div_header_distrac'>
-                <h2>Update Information</h2>
+                <h1>Update Information</h1>
             </div>
             <div className='div_body'>
                 <div className='div_format'>

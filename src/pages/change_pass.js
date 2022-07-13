@@ -29,7 +29,7 @@ function UpdatePassword() {
         if(password === confirm_password){
             const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json","Authorization": "Bearer " + Global.access_token },
+            headers: { "Content-Type": "application/json"}, //"Authorization": "Bearer " + Global.access_token },
             body: JSON.stringify({
                 id: user.id,
                 newpassword: password,
@@ -62,7 +62,7 @@ function UpdatePassword() {
                     { showResults ? <Menu state={user} /> : null }               
                 </div>
                 <div className='div_header_distrac'>
-                    <h2>Change your password</h2>
+                    <h1>Change your password</h1>
                 </div>
                 <div className='div_body'>
                     <div className='div_format'>

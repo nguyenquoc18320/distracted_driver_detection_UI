@@ -46,7 +46,9 @@ function AddUsers() {
                 const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json",
-                "Authorization": "Bearer " + Global.access_token},
+                // "Authorization": "Bearer " + Global.access_token
+                Authorization: "Bearer " + localStorage.getItem("access_token")
+                },
                 body: JSON.stringify({
                     name: name,
                     driver_license: driver_license,
@@ -62,12 +64,17 @@ function AddUsers() {
                     return response.json();
                 })
                 .then((data) => {
-                    Global.updateAccessToken(data.data["access_token"]);
+                    // Global.updateAccessToken(data.data["access_token"]);
+                    alert(data.data["alert"])
                     navigate("/manage-user");
                 })
                 .catch(
-                    (error) => console.log(error) // Handle the error response object
-                );
+                    (error) => {console.log(error)
+                        alert("Fail !!!");
+                    }
+                )
+                
+                ;
             }else{
                 alert("Confirmation password is not correct!!!")
             }
@@ -77,18 +84,21 @@ function AddUsers() {
       }
 
     return (
+        <div className='div_background'>
         <div className='container'>
-            <div className='div_header'>
-                <h2>New Account</h2>
+            <div className='div_header_distrac'>
+                <h1>New Account</h1>
             </div>
             <div className='div_body'>
-                <div className='div_format'>
+            <div className='div_convert'>
+                <div className='div_format2'>
                     <p>Name:</p>
                     <input type="text" name="name" placeholder="Driver's name" onChange={(e) => changeNameValue(e)} required></input>
                 </div>
-                <div className='div_format'>
+                <div className='div_format3'>
                     <p>Driver License:</p>
                     <input type="text" name= "driver_license" placeholder= "Driver's license" onChange={(e) => changeDriverLicenseValue(e)} required></input>
+                </div>
                 </div>
                 <div className='div_format_gender'>
                     <p>Gender:</p>
@@ -101,6 +111,7 @@ function AddUsers() {
                         
                     </div>
                 </div>
+             
                 <div className='div_format'>
                     <p>Birthday:</p>
                     <input type="date" name= "birthday"  value={birthday} onChange={(e) => changeBirthday(e)} required></input>
@@ -109,24 +120,28 @@ function AddUsers() {
                     <p>Phone:</p>
                     <input type="text" name="phone" placeholder='Phone' onChange={(e) => changePhoneValue(e)} required></input>
                 </div>
+                
                 <div className='div_format'>
                     <p>Username to Login:</p>
                     <input type="text" name="username" placeholder='Username' onChange={(e) => changeUserNameValue(e)} required></input>
                 </div>
-                <div className='div_format'>
-                    <p>Password:</p>
-                    <input type="Password" name= "password" placeholder='Password' onChange={(e) => changePassWordValue(e)} required></input>
-                </div>
-                <div className='div_format'>
-                    <p>Confirm password:</p>
-                    <input type="Password" name="confirmpassword" placeholder='Confirm password' onChange={(e) => changeConfirmPasswordValue(e)} required></input>
+                <div className='div_convert'>
+                    <div className='div_format2'>
+                        <p>Password:</p>
+                        <input type="Password" name= "password" placeholder='Password' onChange={(e) => changePassWordValue(e)} required></input>
+                    </div>
+                    <div className='div_format3'>
+                        <p>Confirm password:</p>
+                        <input type="Password" name="confirmpassword" placeholder='Confirm password' onChange={(e) => changeConfirmPasswordValue(e)} required></input>
+                    </div>
                 </div>
                 <div className='div_format'>
                     <button className='btn_register' onClick={() => clickRegisterButton()}>Add User</button>
                 </div>
                 
             </div>
-        </div>     
+        </div>    
+        </div> 
     ); 
 }
 

@@ -76,6 +76,10 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
+    border: 0.5px solid black;
+    border-radius: 4px;
+    width: 250px;
+    margin-left: 35%;
     
 }
 .div_gender input{
@@ -83,4 +87,33 @@
 }
 .div_gender p{
     margin: 10px;
+}
+.div_convert{
+    display: flex;
+}
+.div_format2{
+    font-weight: bold;
+    margin-left: 20%;
+    margin-right: 5%;
+
+}
+.div_format2 input{
+    width: 100%;
+    margin-left: 12%;
+    height: 30px;
+    font-size: 20px;
+    padding: 10px 5px 10px 5px;
+}
+.div_format3{
+    font-weight: bold;
+    margin-left: 8%;
+    /* margin-right: 20%; */
+
+}
+.div_format3 input{
+    width: 100%;
+    margin-left: 5%;
+    height: 30px;
+    font-size: 20px;
+    padding: 10px 5px 10px 5px;
 }
