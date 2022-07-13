@@ -14,48 +14,123 @@ function Predict(){
     var [user, setUser] = React.useState([]);
     const [showResults, setShowResults] = React.useState(false)
     const onClickMenu = () => setShowResults(true)
-	const [showImage, setShowImage] = React.useState(false)
-	const onClickImage = () => setShowImage(true)
+	var [loadImage, setLoadImage] = React.useState()
+	// const onClickImage = () => setShowImage(true)
 	const [resultImage, setResultImage] = React.useState([]);
 
-	const getImagegbyPath = async (path) => {		
-		var result = await getImage(path);
-		if (result != null) {
-			const imageObjectURL = URL.createObjectURL(result);
-			setResultImage((images) => [
-				...images,
-				{
-					img: imageObjectURL,
-				},
-			]);
-			
-		} else {
-			console.log("error");
-		}		
-	};	
+	
+	// const loadImageFormData = () => {
+	// 	console.log(data);
+	// 	var lengthImg = data.length;
+	// 	// if (lengthImg > 0 ) {
+	// 	// for (var i = 0; i < lengthImg; i++) {
+	// 	var i=0;
+	// 	while (i<lengthImg){
+	// 		var a = JSON.stringify(data[i]);
+	// 		var b = JSON.parse(a);
+	// 		console.log(b);
+	// 		getImagegbyPath(b.image_path);
+	// 		i++;
+	// 	}	
+	// 	setLoadImage(false)
+	// }
 	React.useEffect(() => {
 		setUser(location.state)
+		
 		distractionUser(location.state.id)
 		.then((res) => {
 			setData(res);
+			// var a = JSON.stringify(res[i]);
+			// var lengthImg = res.length;
+			// console.log(resultImage.length, lengthImg);
+			// var i=0;
+			// if(resultImage.length<lengthImg){
+			// 	while (i<lengthImg){
+			// 		var a = JSON.stringify(res[i]);
+			// 		var b = JSON.parse(a);
+			// 		console.log(b);
+			// 		// getImagegbyPath(b.image_path);
+			// 		getImage(b.image_path)
+			// 		.then((res2) => {
+			// 			console.log(res2);
+			// 			const imageObjectURL = URL.createObjectURL(res2);
+			// 			setResultImage((image) => [
+			// 				...image,
+			// 				{
+			// 					image: imageObjectURL,
+			// 				},
+			// 			]);
+						
+			// 		})
+			// 		.catch((e) => {
+			// 			console.log(e.message);
+			// 		});
+					
+			// 		i++;
+			// 	};
+			// }
+
+			// console.log(resultImage);
+			
 		})
 		.catch((e) => {
 			console.log(e.message);
 		});
-		var lengthImg = data.length;
-		if (lengthImg > 0 ) {
-			for (var i = 0; i < lengthImg; i++) {
-				var a = JSON.stringify(data[i]);
-				var b = JSON.parse(a);
-				console.log(b);
-				getImagegbyPath(b.image_path);
-			}
+
+	}, []);	
+	
+	// var lengthImg = data.length;
+	// 	// if (lengthImg > 0 ) {
+	// for (var i = 0; i < lengthImg; i++) {
+	// 	var a = JSON.stringify(data[i]);
+	// 	var b = JSON.parse(a);
+	// 	console.log(b);
+	// 	getImagegbyPath(b.image_path);
+	// };
+
+	//////////////////////////////////////////////////////////////////////
+	// console.log(data);
+	// var lengthImg = data.length;
+	// // if (lengthImg > 0 ) {
+	// // for (var i = 0; i < lengthImg; i++) {
+	// var i=0;
+	// while (i<lengthImg){
+	// 	var a = JSON.stringify(data[i]);
+	// 	var b = JSON.parse(a);
+	// 	console.log(b);
+	// 	// getImagegbyPath(b.image_path);
+	// 	getImage(b.image_path)
+	// 	.then((res) => {
+	// 		const imageObjectURL = URL.createObjectURL(res);
+	// 		setResultImage((image) => [
+	// 			...image,
+	// 			{
+	// 				image: imageObjectURL,
+	// 			},
+	// 		]);
+			
+	// 	})
+	// 	.catch((e) => {
+	// 		console.log(e.message);
+	// 	});
+		
+	// 	i++;
+	// };	
+	const getImagegbyPath = async (path) => {		
+		var result = await getImage(path);
+		if (result != null) {
+			const imageObjectURL = URL.createObjectURL(result);
+			setLoadImage(imageObjectURL);
+			
+		} else {
+			console.log("error");
 		}
-	}, []);
+		
+	};			
 	return (
 
 			<div className="div_dashboard_distraction">
-		
+				{/* {loadImage ? loadImageFormData: null} */}
 				<div className="div-menu-icon">
 					<FaRegListAlt className="div-menu-icon2" onClick={onClickMenu} />
 					{ showResults ? <Menu state={user} /> : null }               
@@ -78,33 +153,46 @@ function Predict(){
 					</thead>
 					<tbody>
 					{
-						data.map((item)=>{
-							var stringDT = JSON.stringify(item);
-						
-							var distrac = JSON.parse(stringDT);
-							// getImagegbyPath(distrac.image_path);
-						})
+						console.log(data[1])
+						// data.get((item)=>{
+						// 	var stringDT = JSON.stringify(item);
+							
+						// 	var distrac = JSON.parse(stringDT);
+						// 	console.log(item);
+						// 	// getImagegbyPath(distrac.image_path);
+						// })
 					}
 					{data.map((item, idx) => {
 						var stringDistrac = JSON.stringify(item);
 						
 						var distraction = JSON.parse(stringDistrac);
-						console.log(resultImage);
+					
+						// console.log(distraction);
+						// getImagegbyPath(distraction.image_path);
 						return (
 							<tr key={idx}>								
 								<td>{idx + 1}</td>
 								<td>{distraction.time}</td>
 								<td >{distraction.category}</td>														
-								<td>														
+								<td >
+									
 									<img										
-										src={resultImage[idx].img}
-										height={150}
+										src={loadImage}
+										height={150} 
 										width={200}
-									/>								
+									/>
+									{/* ) : (	
+										<img										
+										alt="Result"
+										height={150} 
+										width={200}
+									/>
+									)}							 */}
 								</td>							
 							</tr>
 						);
 					})}
+					
 					</tbody>
 				</table>
 				</div>
