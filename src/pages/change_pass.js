@@ -26,32 +26,36 @@ function UpdatePassword() {
         setConfirmPassword(e.target.value);
     }
     async function clickRegisterButton() {
-        if(password === confirm_password){
-            const requestOptions = {
-            method: "PUT",
-            headers: { "Content-Type": "application/json"}, //"Authorization": "Bearer " + Global.access_token },
-            body: JSON.stringify({
-                id: user.id,
-                newpassword: password,
-            }),
-            };
-            fetch(Global.api_url + "password_update", requestOptions)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                // Global.updateAccessToken(data.data["access_token"]);
-                alert(data.data["request"])
-                navigate("/infor",{state: user})
-                
-            })
-            .catch(
-                (error) => console.log(error) // Handle the error response object
-            );
+        if(password.length >5){
+            if(password === confirm_password){
+                const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("access_token")},
+                body: JSON.stringify({
+                    id: user.id,
+                    newpassword: password,
+                }),
+                };
+                fetch(Global.api_url + "password_update", requestOptions)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    // Global.updateAccessToken(data.data["access_token"]);
+                    alert(data.data["request"])
+                    navigate("/infor",{state: user})
+                    
+                })
+                .catch(
+                    (error) => console.log(error) // Handle the error response object
+                );
+            }else{
+                alert("Confirmation password is not correct!!!")
+            }
         }else{
-            alert("Confirmation password is not correct!!!")
+            alert("Password at least 6 characters!!!")
         }
-
       }
 
     return (
@@ -61,7 +65,7 @@ function UpdatePassword() {
                     <FaRegListAlt className="div-menu-icon2" onClick={onClickMenu} />
                     { showResults ? <Menu state={user} /> : null }               
                 </div>
-                <div className='div_header_distrac'>
+                <div className='div_header'>
                     <h1>Change your password</h1>
                 </div>
                 <div className='div_body'>

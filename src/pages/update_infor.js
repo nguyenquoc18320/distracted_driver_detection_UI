@@ -74,7 +74,7 @@ function UpdateUser() {
                 <FaRegListAlt className="div-menu-icon2" onClick={onClickMenu} />
                 { showResults ? <Menu state={data}/> : null }               
             </div>
-            <div className='div_header_distrac'>
+            <div className='div_header'>
                 <h1>Update Information</h1>
             </div>
             <div className='div_body'>

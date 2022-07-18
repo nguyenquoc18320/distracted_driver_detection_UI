@@ -9,7 +9,7 @@
     height: 80px;
     display: flex;
     justify-content: space-between;
-    padding-left: 40%;
+    padding-left: 45%;
 }
 .div_name_product_distrac {
     display: flex;
@@ -28,4 +28,22 @@
 }
 .image{
     width: 150px;
+}
+.div_datepicker{
+    
+    margin-bottom: 20px;
+    border: 1.5px solid black ;
+    padding: 10px;
+    font-size: 18px;
+    z-index: 1200;
+}
+.div_content_dashboard_distraction{
+    
+    padding: 0px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-left: 250px;
+    font-size: 22px;
 }
