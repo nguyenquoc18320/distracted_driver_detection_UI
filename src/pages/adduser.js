@@ -42,41 +42,45 @@ function AddUsers() {
     
     async function clickRegisterButton() {
         if(name != null &&driver_license !=null&&gender !=null&&birthday !=null&&phone !=null&&username !=null&&password !=null&&confirm_password !=null){
-            if(password === confirm_password){
-                const requestOptions = {
-                method: "POST",
-                headers: { "Content-Type": "application/json",
-                // "Authorization": "Bearer " + Global.access_token
-                Authorization: "Bearer " + localStorage.getItem("access_token")
-                },
-                body: JSON.stringify({
-                    name: name,
-                    driver_license: driver_license,
-                    gender: gender,
-                    birthday: birthday,
-                    phone: phone,
-                    username: username,
-                    password: password, 
-                }),
-                };
-                fetch(Global.api_url + "register", requestOptions)
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    // Global.updateAccessToken(data.data["access_token"]);
-                    alert(data.data["alert"])
-                    navigate("/manage-user");
-                })
-                .catch(
-                    (error) => {console.log(error)
-                        alert("Fail !!!");
-                    }
-                )
-                
-                ;
+            if(password.length >5){
+                if(password === confirm_password){
+                    const requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json",
+                    // "Authorization": "Bearer " + Global.access_token
+                    Authorization: "Bearer " + localStorage.getItem("access_token")
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        driver_license: driver_license,
+                        gender: gender,
+                        birthday: birthday,
+                        phone: phone,
+                        username: username,
+                        password: password, 
+                    }),
+                    };
+                    fetch(Global.api_url + "register", requestOptions)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        // Global.updateAccessToken(data.data["access_token"]);
+                        alert(data.data["alert"])
+                        navigate("/manage-user");
+                    })
+                    .catch(
+                        (error) => {console.log(error)
+                            alert("Fail !!!");
+                        }
+                    )
+                    
+                    ;
+                }else{
+                    alert("Confirmation password is not correct!!!")
+                }
             }else{
-                alert("Confirmation password is not correct!!!")
+                alert("Password at least 6 characters!!!")
             }
         }else{
             alert("Please enter enough information!!!")
